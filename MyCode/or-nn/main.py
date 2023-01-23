@@ -11,10 +11,16 @@ spectedOutput = torch.tensor([[0, 1, 1, 0]], dtype=torch.float)
 class Model(nn.Module):
     def __init__(self):
         super(Model, self).__init__()
-        self.linear = nn.Linear(2, 1)
+        self.seq = nn.Sequential(
+            nn.Linear(2, 3),
+            nn.Sigmoid(),
+            nn.Linear(3, 1),
+            
+        )
 
     def forward(self, x):
-        return 1 / (1 + torch.exp(-self.linear(x)))
+        return self.seq(x)
+
 
 model = Model()
 
@@ -22,21 +28,24 @@ model = Model()
 criterion = nn.L1Loss()
 
 # Create the optimizer
-optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
 # Store the losses
 train_loss_values = []
 epoch_count = []
 
 # Train the model
-epochs = 1000
+epochs = 1100
 
 print(model.state_dict())
-breakpoint()
+#breakpoint()
 for epoch in range(epochs):
     # Forward pass
     y_pred = model(torch.stack((a, b), dim=1))
     loss = criterion(y_pred, spectedOutput.T)
+
+    # if loss < 0.01:
+    #     break
 
     # Backward pass
     optimizer.zero_grad()
@@ -51,6 +60,7 @@ for epoch in range(epochs):
 
 # Plot the loss
 plt.plot(epoch_count, train_loss_values, 'r--')
+plt.yscale('log')
 plt.show()
 
 # predict
