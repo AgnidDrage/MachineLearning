@@ -143,6 +143,7 @@ def train(dataloader, model, loss_fn, optimizer):
 
         # Compute prediction error
         pred = model(X)
+        breakpoint()
         loss = loss_fn(pred, y)
 
         # Backpropagation
