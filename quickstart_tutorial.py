@@ -27,6 +27,7 @@ from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import ToTensor
+import numpy as np
 
 ######################################################################
 # PyTorch offers domain-specific libraries such as `TorchText <https://pytorch.org/text/stable/index.html>`_,
@@ -139,11 +140,11 @@ def train(dataloader, model, loss_fn, optimizer):
     size = len(dataloader.dataset)
     model.train()
     for batch, (X, y) in enumerate(dataloader):
+        #change X to numpy array
         X, y = X.to(device), y.to(device)
 
         # Compute prediction error
         pred = model(X)
-        breakpoint()
         loss = loss_fn(pred, y)
 
         # Backpropagation
@@ -230,12 +231,12 @@ classes = [
 ]
 
 model.eval()
-x, y = test_data[0][0], test_data[0][1]
+x, y = test_data[1][0], test_data[1][1]
 with torch.no_grad():
     pred = model(x)
+    breakpoint()
     predicted, actual = classes[pred[0].argmax(0)], classes[y]
     print(f'Predicted: "{predicted}", Actual: "{actual}"')
-
 
 ######################################################################
 # Read more about `Saving & Loading your model <saveloadrun_tutorial.html>`_.
