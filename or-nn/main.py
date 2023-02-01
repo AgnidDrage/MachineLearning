@@ -66,6 +66,6 @@ plt.show()
 # predict
 model.eval()
 print("Predictions:")
-print(model(torch.stack((a, b), dim=1)))
-print("Spected output:")
+print(torch.round(model(torch.stack((a, b), dim=1))))
+print("Expected output:")
 print(spectedOutput.T)
