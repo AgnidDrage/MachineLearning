@@ -10,4 +10,5 @@ class LinearRegressionModel(nn.Module):
 
     # Forward pass
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        breakpoint()
         return x * self.weight + self.bias

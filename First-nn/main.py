@@ -11,6 +11,7 @@ print(f"Using device: {device}")
 
 # Data
 X_train = torch.arange(0,10,1).float().to(device)
+breakpoint()
 y_train = X_train * 2
 X_test = torch.arange(10,20,1).float().to(device)
 y_test = X_test * 2
